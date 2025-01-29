@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOUNDBOARD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Title */
+        .title {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.5rem; /* font size for title */
+            color: white;
+            font-weight: bold;
+            font-family: 'Righteous', sans-serif; 
+            padding: 1rem;
+            text-align: center;
+            z-index: 10; /* Ensures title is on top of other elements */
+        }
+
+        :root {
+            --grad-1: #042240;
+            --grad-2: #000000;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns for left and right sides for buttons */
+            height: 100vh;
+            overflow: hidden;
+            /* Background gradient*/
+            background: radial-gradient(ellipse at center, var(--grad-1) 0%, var(--grad-2) 100%);
+        }
+
+        .left-side, .right-side {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        
+        .btn-group {
+            display: flex;
+            flex-direction: row; /* Buttons in row (horizontal) */
+        }
+
+        /* Button with white border */
+        .custom-btn {
+            font-size: 1.5rem; /* font size for Front and Back buttons */
+            padding: 5rem 5rem; /* Padding for larger buttons */
+            background-color: #333; /* Dark background */
+            color: white; /* White text */
+            border: 2px solid white; /* White border */
+            cursor: pointer;
+            transition: background-color 0.3s ease, border 0.3s ease;
+        }
+
+        .custom-btn:hover {
+            background-color: #555; /* Initial background color */
+            border-color: #ccc; /* Lighten the border on hover */
+        }
+
+        .btn-group-vertical {
+            display: flex;
+            flex-direction: column; /* Buttons in column (vertical) */
+        }
+
+        .btn-large {
+            font-size: 1.5rem;
+            padding: 5rem 5rem;
+        }
+
+        .flashing {
+            animation: flashing 0.25s infinite alternate;
+        }
+
+        @keyframes flashing {
+            from { background-color: red; }
+            to { background-color: green; }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        Strumbeatz Soundboard
+    </div>
+    <div class="left-side">
+        <div class="btn-group btn-group-lg">
+            <button type="button" class="custom-btn" onclick="toggleButton(this)">Left</button>
+            <button type="button" class="custom-btn" onclick="toggleButton(this)">Right</button>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="btn-group-vertical">
+            <button type="button" class="custom-btn btn-large" onclick="toggleButton(this)">Front</button>
+            <button type="button" class="custom-btn btn-large" onclick="toggleButton(this)">Back</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleButton(button) {
+            const colors = ['black', 'green', 'red', 'flashing'];
+            let currentIndex = colors.indexOf(button.dataset.color || 'black');
+
+            // Cycle through colors
+            currentIndex = (currentIndex + 1) % colors.length;
+
+            // Update the color and appearance
+            button.dataset.color = colors[currentIndex];
+
+            if (colors[currentIndex] === 'flashing') {
+                button.classList.add('flashing');
+                button.style.backgroundColor = '';
+            } else {
+                button.classList.remove('flashing');
+                button.style.backgroundColor = colors[currentIndex];
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
